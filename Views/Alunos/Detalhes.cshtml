@@ -1,0 +1,74 @@
+﻿@model Aluno
+@{
+    ViewData["Title"] = "Alunos";
+}
+
+<div class="text-center">
+    <h4 class="display-6">Informações do Aluno</h4>
+    <br />
+
+</div>
+<div>
+
+
+    <p><b>ID:</b> @Model.Id</p>
+    <p><b>Nome Completo: </b> @Model.Nome @Model.Sobrenome</p>
+    <p><b>CPF:</b> @(string.Format("{0:000\\.000\\.000\\-00}", long.Parse(Model.CPF)))</p>
+    <p><b>Data de Nascinmento:</b> @Model.DataNascimento.ToShortDateString()</p>
+    <p><b>Telefone:</b>: @(string.Format("{0:(00) 00000-0000}", long.Parse(Model.Telefone)))</p>
+    <p><b>Assinaturas:</b></p>
+    @if (Model.Assinaturas != null && Model.Assinaturas.Any())
+    {
+
+        @foreach (var assinatura in Model.Assinaturas)
+        {
+            <ul>
+                <p>O aluno possui: @Model.Assinaturas.Count() assinaturas</p>
+                <p>Inicio da Assinatura: @assinatura.Inicio.ToShortDateString() </p>
+                <p>Expira em: @assinatura.Termino.ToShortDateString()</p>
+                
+            </ul>
+        }
+
+    }
+    else
+    {
+        <p>Nenhuma assinatura encontrada para este aluno.</p>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.ImagemAluno))
+    {
+        <p><b>Imagem:</b></p>
+        <img id="imagemAluno" src="~/imgs/@Model.ImagemAluno" alt="imageAluno" style="display: none; max-width: 500px; height:auto;" />
+        <button class="btn btn-primary btn-sm" id="btnToggleImage" onclick="toggleImage()">Exibir Imagem</button>
+    }
+    else
+    {
+        <p>Nenhuma imagem disponível.</p>
+    }
+
+</div>
+
+
+<div class="text-center">
+    <a class="btn btn-dark" role="button" asp-action="Index"> Voltar</a>
+</div>
+
+
+
+@section Scripts{
+    <script>
+        function toggleImage() {
+            var imagem = document.getElementById("imagemAluno");
+            var btnToggle = document.getElementById("btnToggleImage");
+
+            if (imagem.style.display === "none") {
+                imagem.style.display = "block";
+                btnToggle.textContent = "Ocultar Imagem";
+            } else {
+                imagem.style.display = "none";
+                btnToggle.textContent = "Exibir Imagem";
+            }
+        }
+    </script>
+}

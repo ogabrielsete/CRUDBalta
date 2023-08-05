@@ -1,0 +1,48 @@
+﻿@model Aluno
+@{
+    ViewData["Title"] = "Editar Aluno";
+}
+
+<div class="text-center">
+
+    <p class="display-6">Editar Aluno</p>
+    <br />
+</div>
+
+<div class="row">
+    <div class="col-sm-6 mb-3">
+        <label for="nomeAluno" class="col-sm-6 col-form-label">Nome</label>
+        <input type="text" class="form-control" aria-label="Nome" asp-for="Nome">
+    </div>
+
+    <div class="col">
+        <label for="nomeAluno" class="col-sm-6 col-form-label">Sobrenome</label>
+        <input type="text" class="form-control" aria-label="Sobrenome" asp-for="Sobrenome">
+    </div>
+
+    <div class="col-sm-6 mb-3">
+        <label for="cpf" class="col-sm-6 col-form-label">CPF</label>
+        <input type="text" id="cpfAluno" class="form-control" placeholder="000.000.000-00" asp-for="CPF">
+    </div>
+
+    <div class="col-sm-6">
+        <label for="dataNascimento" class="col-sm-6 col-form-label">Data de Nascimento</label>
+        <input type="date" id="dataNascimento" class="form-control" asp-for="DataNascimento">
+    </div>
+
+    <div class="col-sm-6 mb-3">
+        <label for="telefone" class="col-sm-6 col-form-label">Telefone</label>
+        <input type="tel" id="telefone" class="form-control" placeholder="(11) 91234-5679" asp-for="Telefone">
+    </div>
+
+    <div class="col-sm-6">
+        <label for="nomeAluno" class="col-sm-6 col-form-label">Imagem</label>
+        <input type="file" id="imagem" class="form-control" asp-for="ImagemAluno">
+    </div>
+</div>
+
+<div>
+    <br />
+    <button type="submit" class="btn btn-success">Editar Aluno</button>
+    <a class="btn btn-danger" asp-controller="Alunos" asp-action="Index">Voltar</a>
+</div>

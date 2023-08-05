@@ -1,0 +1,113 @@
+﻿@model List<Aluno>
+@{
+    ViewData["Title"] = "Alunos";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Listagem de Alunos</h1>
+
+    <br />
+    <a class="btn btn-success" asp-controller="Alunos" asp-action="Criar">Adicionar Aluno</a>
+    <br />
+    <br />
+</div>
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div class="alert alert-success text-center" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="close">X</button>
+        @TempData["MensagemSucesso"]
+    </div>
+}
+
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-danger text-center" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="close">X</button>
+        @TempData["MensagemErro"]
+    </div>
+}
+
+
+<table class="table table-striped text-center">
+    <thead>
+        <tr>
+            <th class="d-none">Id</th> @* Por boas práticas ocultei o Id *@
+            <th scope="col" class="text-center">Nome</th>
+            <th scope="col" class="text-center">Sobrenome</th>
+            <th scope="col" class="text-center">CPF</th>
+            <th scope="col" class="text-center">D. Nascimento</th>
+            <th scope="col" class="text-center">Telefone</th>
+            <th scope="col" class="text-center">Imagem</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (Aluno aluno in Model)
+            {
+                string cpfFormatado = String.Format("{0:000\\.000\\.000\\-00}", long.Parse(aluno.CPF));
+                string telefoneFormatado = String.Format("{0:(00) 00000-0000}", long.Parse(aluno.Telefone));
+                <tr>
+                    <th class="d-none">@aluno.Id</th> @* Por boas práticas ocultei o Id *@
+                    <td>@aluno.Nome</td>
+                    <td>@aluno.Sobrenome</td>
+                    <td>@cpfFormatado</td>
+                    <td>@aluno.DataNascimento.ToShortDateString()</td>
+                    <td>@telefoneFormatado</td>
+                    <td>
+                        <img src="~/imgs/@aluno.ImagemAluno" class="rounded-circle" width="40" height="40" asp-append-version="true" />
+                    </td>
+                    <td>
+                        <a type="button" class="btn btn-outline-dark" asp-controller="Alunos" asp-route-id="@aluno.Id" asp-action="Detalhes"><i class="bi bi-person"></i> </a>
+                        <a type="button" class="btn btn-outline-dark" asp-controller="Alunos" asp-route-id="@aluno.Id" asp-action="Editar"><i class="bi bi-pencil"></i></a>
+                         <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modalDelete_@aluno.Id"><i class="bi bi-trash"></i></button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@foreach (Aluno aluno in Model)
+{
+    <div class="modal fade" id="modalDelete_@aluno.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color:transparent; border:none;">
+                        <i class="bi bi-x"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Deseja realmente excluir o aluno @aluno.Nome?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-danger" asp-controller="Alunos" asp-route-id="@aluno.Id" asp-action="Deletar">Excluir</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="modal"]').click(function () {
+                var target = $(this).data('target');
+                $(target).modal('show');
+            });
+
+            $('.modal').on('click', '.btn-secondary', function () {
+                $(this).closest('.modal').modal('hide');
+            });
+
+            $('.modal').on('click', '[data-dismiss="modal"]', function () {
+                $(this).closest('.modal').modal('hide');
+            });
+        });
+    </script>
+}

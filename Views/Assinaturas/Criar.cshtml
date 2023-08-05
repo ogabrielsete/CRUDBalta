@@ -1,0 +1,36 @@
+﻿@model TesteBalta.Models.ViewModels.AssinaturaViewModel
+
+@{
+    ViewData["Title"] = "Adicionar Assinatura";
+}
+
+<div class="text-center">
+    <p class="display-6">Adicionar Assinatura</p>
+    <br />
+</div>
+
+<form class="row" asp-controller="Assinaturas" asp-action="Criar" method="post">
+
+    <div class="d-flex justify-content-center">
+        <div class="col-sm-4 mb-4">
+            <label for="alunoId" class="col-form-label">Escolha o Aluno</label>
+            <select name="AlunoId" asp-for="AlunoId" class="form-select l" asp-items="ViewBag.Alunos">
+                <option value="" disabled selected hidden>Selecione o Aluno</option>
+            </select>
+            <span asp-validation-for="AlunoId" class="text-danger"></span>
+        </div>
+
+        <div class="col-sm-4">
+            <label for="dataTermino" class="col-form-label">Termino</label>
+            <input type="date" class="form-control" asp-for="Termino">
+            <span asp-validation-for="Termino" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="col-sm-12 text-center">
+        <br />
+        <button type="submit" class="btn btn-success">Adicionar Assinatura</button>
+        <a class="btn btn-danger" asp-controller="Assinaturas" asp-action="Index">Voltar</a>
+    </div>
+</form>
+

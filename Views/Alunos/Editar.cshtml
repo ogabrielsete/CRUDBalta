@@ -1,0 +1,84 @@
+﻿@model TesteBalta.Models.ViewModels.AlunoViewModel
+
+@{
+    ViewData["Title"] = "Alterar Aluno";
+}
+
+<div class="text-center">
+
+    <p class="display-6">Alterar Aluno</p>
+    <br />
+</div>
+
+
+<form class="row" asp-controller="Alunos" asp-action="Editar" method="post" enctype="multipart/form-data">
+    <div class="col-sm-6 mb-3">
+        <label for="nomeAluno" class="col-sm-6 col-form-label">Nome</label>
+        <input type="text" id="nomeAluno" class="form-control capitalize" aria-label="Nome" asp-for="Nome">
+        @Html.ValidationMessageFor(x => x.Nome)
+    </div>
+
+    <div class="col">
+        <label for="nomeAluno" class="col-sm-6 col-form-label">Sobrenome</label>
+        <input type="text" id="sobrenomeAluno" class="form-control capitalize" aria-label="Sobrenome" asp-for="Sobrenome">
+        @Html.ValidationMessageFor(x => x.Sobrenome)
+    </div>
+
+    <div class="col-sm-6 mb-3">
+        <label for="cpf" class="col-sm-6 col-form-label">CPF</label>
+        <input type="text" id="cpfAluno" class="form-control" placeholder="Apenas número" asp-for="CPF">
+        @Html.ValidationMessageFor(x => x.CPF)
+    </div>
+
+    <div class="col-sm-6">
+        <label for="dataNascimento" class="col-sm-6 col-form-label">Data de Nascimento</label>
+        <input type="date" id="dataNascimento" class="form-control" asp-for="DataNascimento">
+    </div>
+
+    <div class="col-sm-6 mb-3">
+        <label for="telefone" class="col-sm-6 col-form-label">Telefone</label>
+        <input type="tel" id="telefoneAluno" class="form-control" placeholder="(11) 91234-5679" asp-for="Telefone">
+        @Html.ValidationMessageFor(x => x.Telefone)
+    </div>
+
+    <div class="col-sm-2 col-form-label">
+        <label for="imagem" class="col-sm-2 col-form-label">Imagem</label>
+        <div class="col-sm-10">
+            <input type="file" id="imagemInput" class="form-control" asp-for="ImagemAluno" accept="image/*">
+            @Html.ValidationMessageFor(x => x.ImagemAluno)
+        </div>
+    </div>
+
+
+    <div>
+        <br />
+        <button type="submit" class="btn btn-success">Alterar Aluno</button>
+        <a class="btn btn-danger" asp-controller="Alunos" asp-action="Index">Voltar</a>
+    </div>
+</form>
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Transformar o nome em caixa alta/baixa em capitalização de palavras
+            $('.capitalize').on('input', function () {
+                const texto = $(this).val();
+                const palavras = texto.split(' ');
+
+                const textoFormatado = palavras.map(function (palavra) {
+                    return palavra.charAt(0).toUpperCase() + palavra.slice(1).toLowerCase();
+                }).join(' ');
+
+                $(this).val(textoFormatado);
+            });
+
+            // Aplicar a máscara de CPF no campo de entrada
+            $('#cpfAluno').mask('000.000.000-00');
+
+            // Máscara de telefone no campo de entrada
+            $('#telefoneAluno').mask('(00) 00000-0000');
+        });
+    </script>
+}
+

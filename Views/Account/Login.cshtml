@@ -1,0 +1,27 @@
+﻿@model TesteBalta.Models.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="d-flex justify-content-center" style="text-align:center;">
+    <div class="form-box" style="background-color: white; padding: 70px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1);">
+        <form class="col-12 text-align-center" asp-controller="Account" asp-action="Login" method="post">
+            <h2 style="margin-bottom:30px">LOGIN</h2>
+            <div class="form-group">
+                <label for="loginId" class="form-label">Usuário</label>
+                <input type="text" class="form-control" id="login" asp-for="UserName">
+                @Html.ValidationMessageFor(x => x.UserName)
+            </div>
+            <div class="form-group">
+                <label for="senha" class="form-label">Senha</label>
+                <input type="password" class="form-control" id="senha" asp-for="Password">
+                @Html.ValidationMessageFor(x => x.Password)
+            </div>
+            <br />
+            <button class="col-12 align-self-auto btn btn-primary" type="submit">Entrar</button>
+            <br />         
+
+        </form>
+    </div>
+</div>
